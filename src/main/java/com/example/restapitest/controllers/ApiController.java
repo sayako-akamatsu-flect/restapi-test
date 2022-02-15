@@ -3,6 +3,7 @@ package com.example.restapitest.controllers;
 import com.example.restapitest.models.Task;
 import com.example.restapitest.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,18 @@ public class ApiController {
     }
 
     @GetMapping(value = "todo/{id}")
-    public Task update(@PathVariable Long id,@RequestBody Task task){
+    public Optional<Task> retrieve(@PathVariable Long id){
+        return taskrepo.findById(id);
+    }
+
+    @PostMapping(value = "/todo")
+    public ResponseEntity<Task> newTask(@RequestBody Task task){
+        Task result  = taskrepo.save(task);
+        return new ResponseEntity<Task>(result,HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/todo/{id}")
+    public Task update(@PathVariable Long id, @RequestBody Task task){
         task.setId(id);
         return taskrepo.save(task);
     }
