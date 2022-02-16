@@ -16,6 +16,5 @@ public class Task {
     private Long id;
     private String summary;
     private Boolean done = false;
-
     public Task(){}
 }

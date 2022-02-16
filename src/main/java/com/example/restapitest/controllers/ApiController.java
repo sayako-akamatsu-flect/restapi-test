@@ -18,16 +18,18 @@ public class ApiController {
     @Autowired
     TaskRepository taskrepo;
 
+
     @GetMapping(value = "/todos")
     public List<Task> tasklist(){
         return taskrepo.findAll();
     }
 
-    @GetMapping(value = "todo/{id}")
+    @GetMapping(value = "/todo/detail/{id}")
     public Optional<Task> retrieve(@PathVariable Long id){
         return taskrepo.findById(id);
     }
 
+    //,consumes = {"application/xml"}
     @PostMapping(value = "/todo")
     public ResponseEntity<Task> newTask(@RequestBody Task task){
         Task result  = taskrepo.save(task);
